@@ -12,15 +12,16 @@ The application shall:
 - List tasks
 - Mark tasks as complete
 - Delete tasks
-- Persist tasks
+- Persist tasks (If using V2 or higher)
 
 ## Non-Requirements
 
 The application shall not:
 
-- Support multiple users
+- Support multiple users 
 - Synchronize across machines
 - Support concurrent access
+- Be an online tool
 
 ## Persistence Guarantee
 

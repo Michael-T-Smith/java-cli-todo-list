@@ -1,0 +1,14 @@
+How to use imports. 
+
+How to establish packages, nested packages, and support packages. 
+
+How to connect classes. 
+
+Establish appropriate access modifers for class access. 
+
+My environment: 
+- Neovim with treesitter. 
+- rustalyzer for Rust
+- Java syntax highlighter for Java. 
+
+
