@@ -8,7 +8,7 @@ public class Main {
    static String[] FunctionalCommands = new String[] {"add", "list", "remove", "complete", "clear"};
 
     public static void main(String[] args) {
-        System.out.println("This is a running memory version only. Nothing persists after exit. Demonstration only.");
+        System.out.println("This is a running memory version only. Nothing persists upon exit.\n 'help' for a list of commands.");
         boolean run_flag = true; 
         ToDoList list = new ToDoList();
        
@@ -29,14 +29,15 @@ public class Main {
                    System.out.println("Remove by Item Number: ");                  
                    removeItem(reader, list);
                    break;
-                case "complete":
-                   System.out.println("Update by Item Number: ");
-                   markComplete(reader, list);
+                case "complete": 
+                   markComplete(command_args, reader, list);
                    break;
                 case "clear": 
                    clearScreen();
                    break;
-
+                case "exit": 
+                   run_flag = false;
+                   break;
                 case "?":
                 case "help":           
                     printHelp();
@@ -50,6 +51,7 @@ public class Main {
                 return;
             }
         }
+        System.out.println("Goodbye User. (ó﹏ò｡)");
         
     }
 
@@ -70,15 +72,28 @@ public class Main {
         }
     }
 
-    private static void markComplete(BufferedReader reader, ToDoList list) {
+    private static void markComplete(String[] command_args, BufferedReader reader, ToDoList list) {
+        int id;
+        boolean state = true;
+
         try {
-            String i = reader.readLine();
-            int id = Integer.valueOf(i);
-            list.markComplete(id);
+            if (command_args.length < 2) {
+                System.out.println("Enter Item Number: ");
+                id = Integer.valueOf(reader.readLine());
+            } else if (command_args.length == 2) {
+                id = Integer.valueOf(command_args[1]);
+            } else if (command_args[1].contains("-r") && command_args.length == 3) {
+                id = Integer.valueOf(command_args[2]);
+                state = false;
+            } else {
+                System.out.println("Error: Too many arguments");
+                return;
+            }
+            list.markComplete(id, state);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (NumberFormatException e){
-            System.out.println("Not a Number! Try Again");
         }
     }
 
