@@ -1,7 +1,7 @@
 package V1_In_Memory_TodoList;
 import java.util.ArrayList;
-
-
+import java.util.Collections;
+import java.util.List;
 
 public class ToDoList {
     ArrayList<Task> todoList;
@@ -19,22 +19,22 @@ public class ToDoList {
     }
 
     public void markComplete(int id) {
-        if (id - 1 < 0 || id - 1 > this.todoList.size()) {
+        if (id - 1 < 0 || id - 1 >= this.todoList.size()) {
             System.out.println("Error: Task number does not exist.");
         } else {
             id -= 1;
             Task task = this.todoList.get(id);
-            task.completed = true;
+            task.setCompleted(true);
         }
 
     }
 
-    public ArrayList<Task> getList(){
-        return this.todoList;
+    public List<Task> getList(){
+        return Collections.unmodifiableList(this.todoList);
     }
 
     public void removeItem(int i) { 
-        if (i == 0 || i - 1 > this.todoList.size()) {
+        if (i == 0 || i - 1 >= this.todoList.size()) {
             System.out.println("Error: Not a real item number");
         } else {
             i -= 1;

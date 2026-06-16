@@ -1,14 +1,159 @@
-How to use imports. 
+# What I Learned - V1 In-Memory Todo List
 
-How to establish packages, nested packages, and support packages. 
+This project is the first stage of a larger exercise to re-familiarize myself with Java after spending the last several years primarily working with NextJS, C, Python, PyTorch, and TensorFlow.
 
-How to connect classes. 
+The goal of V1 was intentionally narrow: build a fully functional CLI todo application using only in-memory storage. No persistence, frameworks, databases, ORMs, or Spring components were introduced at this stage.
 
-Establish appropriate access modifers for class access. 
+This allowed me to focus on core Java language features and standard library usage.
 
-My environment: 
-- Neovim with treesitter. 
-- rustalyzer for Rust
-- Java syntax highlighter for Java. 
+## Java Project Structure
+
+- Organizing code into packages.
+- Separating domain objects (`Task`) from application state (`ToDoList`) and application entrypoints (`Main`).
+- Understanding package visibility versus public APIs.
+- Managing imports from the Java standard library.
+
+## Object-Oriented Design
+
+The application is structured around three responsibilities:
+
+### Task
+
+Represents a single todo item.
+
+Contains:
+
+- Unique identifier
+- Description
+- Completion state
+
+This reinforced Java's class model, constructors, instance variables, and accessor methods.
+
+### ToDoList
+
+Acts as the application's state manager.
+
+Responsible for:
+
+- Creating tasks
+- Tracking task IDs
+- Removing tasks
+- Updating completion state
+
+This separation prevented command-processing logic from directly manipulating collection internals.
+
+### Main
+
+Responsible for:
+
+- CLI interaction
+- Parsing commands
+- User input validation
+- Routing commands to business logic
+
+This keeps presentation concerns separate from data management.
+
+## Collections Framework
+
+Used `ArrayList<Task>` as the backing store.
+
+Topics reinforced:
+
+- Generic collections
+- Reference semantics
+- Dynamic resizing
+- Element lookup and removal
+- Iteration patterns
+
+One observation coming from C/C++, Rust is that object lifetime management becomes much simpler because collection ownership and object destruction are handled by the JVM garbage collector, which is a nice breathe of fresh air.
+
+However, modifying by reference still exists and mutable states must be managed carefully.
+
+## Input and Output
+
+Used:
+
+- `BufferedReader`
+- `InputStreamReader`
+- `System.in`
+- `System.out`
+
+This provided experience with Java's stream-oriented I/O model and checked exception handling.
+
+## Exception Handling
+
+Worked with:
+
+- `IOException`
+- `NumberFormatException`
+
+This highlighted Java's distinction between:
+
+- Checked exceptions
+- Unchecked exceptions
+
+Compared with C, Java encourages explicit handling of many I/O failure modes through the type system.Streams was also a new concept to work with. Java ensures ease of use with data when using the Streams packages. 
+
+## State Management
+
+The application intentionally stores all state in volatile memory.
+
+Characteristics:
+
+- Fast access
+- No serialization overhead
+- No persistence across executions
+
+This version serves as a baseline implementation before introducing storage layers in later versions.
+
+## Design Tradeoffs Observed
+
+### Array Index vs Stable IDs
+
+Tasks are displayed as numbered items.
+
+Removing an item causes later items to shift positions.
+
+This revealed an important distinction between:
+
+- Collection index
+- Logical task identifier
+
+Future versions will separate these concepts more clearly.
+
+### Encapsulation
+
+The current implementation exposes the underlying `ArrayList` through `getList()`.
+
+While sufficient for a small exercise, a larger application would likely expose read-only views or higher-level query methods to reduce coupling.
+
+### Mutable Domain Objects
+
+`Task` instances are mutable.
+
+This simplifies updates but requires discipline around state changes.
+
+Future iterations may explore:
+
+- Immutable objects
+- Java records
+- Builder patterns
+
+## Preparation for V2
+
+This version establishes a clean domain model that can later be persisted.
+
+The next step is introducing JSON serialization with Jackson, which will add:
+
+- Object serialization/deserialization
+- File I/O
+- Persistence boundaries
+- Data format compatibility concerns
+
+without changing the core task management logic.
 
 
+One design issue I encountered was representation exposure. 
+Returning the backing ArrayList<Task> from ToDoList allows external code to bypass the class API and modify internal state directly. 
+
+While okay for my small exercise, a larger application would typically return immutable views, defensive copies, or have API routes to preserve encapsulation and maintain ownership / truth of application state.

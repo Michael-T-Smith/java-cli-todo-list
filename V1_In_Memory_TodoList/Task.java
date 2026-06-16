@@ -1,9 +1,9 @@
 package V1_In_Memory_TodoList;
 
 public class Task {
-    int id;
-    String desc; 
-    boolean completed; 
+    private int id;
+    private String desc; 
+    private boolean completed; 
 
     public Task(int id, String desc) {
         this.id = id; 
@@ -13,6 +13,10 @@ public class Task {
 
     public String getDesc() {
         return this.desc;
+    }
+
+    public boolean isCompleted() {
+       return this.completed; 
     }
 
     public void setCompleted(boolean state) {

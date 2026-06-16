@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.util.List;
 
 public class Main {
    static String[] FunctionalCommands = new String[] {"add", "list", "remove", "complete"};
@@ -93,10 +94,10 @@ public class Main {
 
     }
 
-    private static void iterateList(ArrayList<Task> list){
+    private static void iterateList(List<Task> list){
         for (int i = 0; i < list.size(); i++){
             var task = list.get(i);
-            System.out.printf("[%s] Item %d: %s\n", task.completed ? "X" : "", i + 1, task.getDesc());
+            System.out.printf("[%s] Item %d: %s\n", task.isCompleted() ? "X" : "", i + 1, task.getDesc());
         }
     }
 
