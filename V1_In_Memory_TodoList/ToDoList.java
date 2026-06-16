@@ -18,13 +18,13 @@ public class ToDoList {
         this.id += 1; 
     }
 
-    public void markComplete(int id) {
+    public void markComplete(int id, boolean state) {
         if (id - 1 < 0 || id - 1 >= this.todoList.size()) {
             System.out.println("Error: Task number does not exist.");
         } else {
             id -= 1;
             Task task = this.todoList.get(id);
-            task.setCompleted(true);
+            task.setCompleted(state);
         }
 
     }

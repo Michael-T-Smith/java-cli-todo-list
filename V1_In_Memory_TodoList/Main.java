@@ -1,12 +1,11 @@
 package V1_In_Memory_TodoList;
-import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.List;
 
 public class Main {
-   static String[] FunctionalCommands = new String[] {"add", "list", "remove", "complete"};
+   static String[] FunctionalCommands = new String[] {"add", "list", "remove", "complete", "clear"};
 
     public static void main(String[] args) {
         System.out.println("This is a running memory version only. Nothing persists after exit. Demonstration only.");
@@ -34,6 +33,10 @@ public class Main {
                    System.out.println("Update by Item Number: ");
                    markComplete(reader, list);
                    break;
+                case "clear": 
+                   clearScreen();
+                   break;
+
                 case "?":
                 case "help":           
                     printHelp();
@@ -48,6 +51,23 @@ public class Main {
             }
         }
         
+    }
+
+    private static void clearScreen(){
+        String[] commands = new String[1];
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                commands[0] = "cls";
+                Runtime.getRuntime().exec(commands);
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (RuntimeException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     private static void markComplete(BufferedReader reader, ToDoList list) {
