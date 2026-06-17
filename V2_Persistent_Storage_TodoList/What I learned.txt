@@ -1,4 +1,13 @@
 # Interface implementation.
 * @Override annotation ensures that the code in scope is the default code ran when implementing an Object based on an Interface.
 
-# 
+# Dependency Injection
+* Transitioned from using importable Java class items to pom.xml, maven managed dependencies.
+
+
+#Java Compiler
+* using `javac` to compile .java files into JVM bytecode .class files. 
+* how to use `jdb` to step through the JVM stack for inline variable reading. 
+
+# Jar command
+* How to write a manifest.txt file to create entry point for standalone Jar file. Javas strongest feature. 
